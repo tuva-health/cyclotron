@@ -2,6 +2,10 @@
 with all_aip_inst_claims as (
 select claim_id
 from {{ ref('aip_venn_diagram') }}
+-- Here we define the logic for what constitutes
+-- an acute inpatient institutional claim by pulling
+-- all claim_ids from the aip_venn_diagram table
+-- that meet this criteria:
 where rb_drg_bill = 1
 ),
 
