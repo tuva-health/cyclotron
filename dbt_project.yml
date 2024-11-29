@@ -1,0 +1,39 @@
+name: 'cyclotron'
+version: '1.0.0'
+config-version: 2
+
+
+profile: 'tuva_snowflake_dev'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  claims_enabled: true
+  clinical_enabled: false
+  
+
+models:
+  cyclotron:
+    +database: cyclotron
+    +schema: cyclotron
+    +materialized: table
+  tuva:
+    +database: cyclotron
+  the_tuva_project:
+    +database: cyclotron
+
+
+seeds:
+  cyclotron:
+    database: cyclotron
+    schema: cyclotron
