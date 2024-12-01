@@ -41,8 +41,26 @@ and aa.patient_id = bb.patient_id
 
 left join {{ ref('claim_grain_calculated_dates') }} cc
 on aa.claim_id = cc.claim_id
+),
+
+
+add_usable_flag as (
+select
+  claim_id,
+  patient_id,
+  paid_amount,
+  usable_patient_id,
+  merge_start_date,
+  merge_end_date,
+  usable_merge_dates,
+  case
+    when (usable_patient_id = 1 and usable_merge_dates = 1) then 1
+    else 0
+  end as usable_prof_claim
+  
+from add_other_fields
 )
 
 
 select *
-from add_other_fields
+from add_usable_flag
