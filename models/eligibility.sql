@@ -1,4 +1,3 @@
 
 select *
-from tuva_synthetic.input_layer.eligibility
-
+from cms_synthetic.input_layer.eligibility
