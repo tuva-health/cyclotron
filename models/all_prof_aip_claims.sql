@@ -22,7 +22,6 @@ group by claim_id
 
 
 add_other_fields as (
-
 select
   aa.claim_id,
   aa.patient_id,
