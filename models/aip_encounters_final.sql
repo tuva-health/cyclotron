@@ -15,6 +15,7 @@ select
   aa.encounter_id,
   aa.encounter_start_date,
   aa.encounter_end_date,
+  (aa.encounter_end_date - aa.encounter_start_date) as los,
   aa.ms_drg_code,
   aa.apr_drg_code,
   aa.diagnosis_code_1,
