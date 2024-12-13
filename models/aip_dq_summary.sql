@@ -982,11 +982,11 @@ null as field_value
 
 
 union all
--- ************************************************************************************
+
 
 select
 93 as rank_id,
-'Summary of AIP encounters' as field,
+'Rolling up professional claims costs into AIP encounters' as field,
 null as field_value
 
 
@@ -995,6 +995,317 @@ union all
 
 select
 94 as rank_id,
+null as field,
+null as field_value
+
+
+union all
+
+
+select
+95 as rank_id,
+'Place of Service Code atomic data quality:' as field,
+null as field_value
+
+
+union all
+
+
+select
+96 as rank_id,
+'(valid pos codes) / (all pos codes) * 100' as field,
+round(
+(select count(*) from {{ ref('pos_all') }}
+ where calculated_claim_type = 'professional' 
+ and valid_place_of_service_code = 1) * 100.0 /
+(select count(*) from {{ ref('pos_all') }}
+ where calculated_claim_type = 'professional')
+, 1) as field_value
+
+
+union all
+
+
+select
+97 as rank_id,
+'(claims with >= 1 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=1 usable pos code') as field_value
+
+
+union all
+
+
+select
+98 as rank_id,
+'(claims with >= 2 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=2 usable pos code') as field_value
+
+
+union all
+
+
+select
+99 as rank_id,
+'(claims with >= 3 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=3 usable pos code') as field_value
+
+
+union all
+
+
+select
+100 as rank_id,
+'(claims with >= 4 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=4 usable pos code') as field_value
+
+
+union all
+
+
+select
+101 as rank_id,
+'(claims with >= 5 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=5 usable pos code') as field_value
+
+
+union all
+
+
+select
+102 as rank_id,
+'(claims with >= 6 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=6 usable pos code') as field_value
+
+
+
+union all
+
+
+select
+103 as rank_id,
+'(claims with >= 7 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=7 usable pos code') as field_value
+
+
+
+union all
+
+
+select
+104 as rank_id,
+'(claims with >= 8 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=8 usable pos code') as field_value
+
+
+
+union all
+
+
+select
+105 as rank_id,
+'(claims with >= 9 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=9 usable pos code') as field_value
+
+
+union all
+
+
+select
+106 as rank_id,
+'(claims with >= 10 usable pos code) / (inst claims) * 100' as field,
+(select percent_of_professional_claims
+ from {{ ref('usable_pos_code_histogram') }}
+ where field = 'Claims with >=10 usable pos code') as field_value
+
+
+union all
+
+
+select
+107 as rank_id,
+null as field,
+null as field_value
+
+
+union all
+
+
+select
+108 as rank_id,
+'Professional aip claims summary:' as field,
+null as field_value
+
+
+union all
+
+
+select
+109 as rank_id,
+'total aip prof claims' as field,
+(select field_value
+ from {{ ref('all_prof_aip_claims_summary') }}
+ where field = 'total aip prof claims') as field_value
+
+
+union all
+
+
+select
+110 as rank_id,
+'(aip prof claims with unusable patient_id) / (total aip prof claims) * 100' as field,
+(select field_value
+ from {{ ref('all_prof_aip_claims_summary') }}
+ where field = '(aip prof claims with unusable patient_id) / (total aip prof claims) * 100') as field_value
+
+
+union all
+
+
+select
+111 as rank_id,
+'(aip prof claims with unusable merge dates) / (total aip prof claims) * 100' as field,
+(select field_value
+ from {{ ref('all_prof_aip_claims_summary') }}
+ where field = '(aip prof claims with unusable merge dates) / (total aip prof claims) * 100') as field_value
+
+
+union all
+
+
+select
+112 as rank_id,
+'(usable aip prof claims) / (total aip prof claims) * 100' as field,
+(select field_value
+ from {{ ref('all_prof_aip_claims_summary') }}
+ where field = '(usable aip prof claims) / (total aip prof claims) * 100') as field_value
+
+
+union all
+
+
+select
+113 as rank_id,
+null as field,
+null as field_value
+
+
+union all
+
+
+select
+114 as rank_id,
+'Usable prof aip claims overlap summary' as field,
+null as field_value
+
+
+union all
+
+
+select
+115 as rank_id,
+'Prof claims overlapping with one encounter' as field,
+(select number_of_claims
+ from {{ ref('prof_aip_overlap_summary') }}
+ where field = 'Prof claims overlapping with one encounter') as field_value
+
+
+union all
+
+
+select
+116 as rank_id,
+'Prof claims overlapping with multiple encounters' as field,
+(select number_of_claims
+ from {{ ref('prof_aip_overlap_summary') }}
+ where field = 'Prof claims overlapping with multiple encounters') as field_value
+
+
+union all
+
+
+select
+117 as rank_id,
+'Prof claims overlapping with no encounters' as field,
+(select number_of_claims
+ from {{ ref('prof_aip_overlap_summary') }}
+ where field = 'Prof claims overlapping with no encounters') as field_value
+
+
+union all
+
+
+select
+118 as rank_id,
+'(Prof claims overlapping with one encounter) / (usable aip prof claims) * 100' as field,
+(select percent_of_usable_aip_prof_claims
+ from {{ ref('prof_aip_overlap_summary') }}
+ where field = 'Prof claims overlapping with one encounter') as field_value
+
+
+union all
+
+
+select
+119 as rank_id,
+'(Prof claims overlapping with multiple encounters) / (usable aip prof claims) * 100' as field,
+(select percent_of_usable_aip_prof_claims
+ from {{ ref('prof_aip_overlap_summary') }}
+ where field = 'Prof claims overlapping with multiple encounters') as field_value
+
+
+union all
+
+
+select
+120 as rank_id,
+'(Prof claims overlapping with no encounters) / (usable aip prof claims) * 100' as field,
+(select percent_of_usable_aip_prof_claims
+ from {{ ref('prof_aip_overlap_summary') }}
+ where field = 'Prof claims overlapping with no encounters') as field_value
+
+
+union all
+
+
+select
+121 as rank_id,
+null as field,
+null as field_value
+
+
+-- ************************************************************************************
+union all
+
+
+select
+122 as rank_id,
+'Summary of AIP encounters' as field,
+null as field_value
+
+
+union all
+
+
+select
+123 as rank_id,
 'aip_encounters' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1005,7 +1316,7 @@ union all
 
 
 select
-95 as rank_id,
+124 as rank_id,
 '(aip_encounters_with_dq_prob) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1016,7 +1327,7 @@ union all
 
 
 select
-96 as rank_id,
+125 as rank_id,
 '(aip_encounters_with_unusable_dx1) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1027,7 +1338,7 @@ union all
 
 
 select
-97 as rank_id,
+126 as rank_id,
 '(aip_encounters_with_unusable_atc) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1038,7 +1349,7 @@ union all
 
 
 select
-98 as rank_id,
+127 as rank_id,
 '(aip_encounters_with_unusable_asc) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1049,7 +1360,7 @@ union all
 
 
 select
-99 as rank_id,
+128 as rank_id,
 '(aip_encounters_with_unusable_ddc) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1060,7 +1371,7 @@ union all
 
 
 select
-100 as rank_id,
+129 as rank_id,
 '(aip_encounters_with_unusable_facility_npi) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1071,7 +1382,7 @@ union all
 
 
 select
-101 as rank_id,
+130 as rank_id,
 '(aip_encounters_with_unusable_rendering_npi) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1082,7 +1393,7 @@ union all
 
 
 select
-102 as rank_id,
+131 as rank_id,
 '(single_inst_claim_aip_encounters) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1093,7 +1404,7 @@ union all
 
 
 select
-103 as rank_id,
+132 as rank_id,
 '(multiple_inst_claim_aip_encounters) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1104,7 +1415,7 @@ union all
 
 
 select
-104 as rank_id,
+133 as rank_id,
 '(aip_encounters_with_prof_claims) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1115,7 +1426,7 @@ union all
 
 
 select
-105 as rank_id,
+134 as rank_id,
 '(aip_encounters_without_prof_claims) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1126,7 +1437,7 @@ union all
 
 
 select
-106 as rank_id,
+135 as rank_id,
 '(spend_from_prof_claims) / (total_spend_on_aip_encounters_with_prof_claims) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1137,7 +1448,7 @@ union all
 
 
 select
-107 as rank_id,
+136 as rank_id,
 '(aip_encounters_with_death) / (aip_encounters) * 100' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1148,7 +1459,7 @@ union all
 
 
 select
-108 as rank_id,
+137 as rank_id,
 'average_los' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
@@ -1159,20 +1470,8 @@ union all
 
 
 select
-109 as rank_id,
+138 as rank_id,
 'average_total_paid_amount' as field,
 (select field_value
  from {{ ref('aip_encounters_final_summary') }}
  where field = 'average_total_paid_amount') as field_value
-
-
-
-
-
-
-
-
-
-
-
-

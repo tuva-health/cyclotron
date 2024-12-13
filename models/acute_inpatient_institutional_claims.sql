@@ -6,7 +6,7 @@ from {{ ref('aip_venn_diagram') }}
 -- an acute inpatient institutional claim by pulling
 -- all claim_ids from the aip_venn_diagram table
 -- that meet this criteria:
-where rb_drg_bill = 1
+where (drg = 1 or bill = 1)
 ),
 
 
