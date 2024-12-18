@@ -1,3 +1,3 @@
 
 select *
-from tuva_synthetic.input_layer.eligibility
+from medicare_lds_five_percent.input_layer.eligibility

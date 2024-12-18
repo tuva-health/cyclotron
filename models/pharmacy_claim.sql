@@ -1,3 +1,26 @@
 
-select *
-from tuva_synthetic.input_layer.pharmacy_claim
+select
+  null as claim_id,
+  null as claim_line_number,
+  null as patient_id,
+  null as member_id,
+  null as payer,
+  null as plan,
+  null as prescribing_provider_npi,
+  null as dispensing_provider_npi,
+  null as ndc_code,
+  null as quantity,
+  null as days_supply,
+  null as refills,
+  null as paid_date,
+  null as paid_amount,
+  null as allowed_amount,
+  null as charge_amount,
+  null as coinsurance_amount,
+  null as copayment_amount,
+  null as deductible_amount,
+  null as in_network_flag,
+  null as data_source,
+  null as file_name,
+  null as ingest_datetime
+
