@@ -40,6 +40,8 @@ select
   bb.dq_problem,
   bb.usable_patient_id,
   bb.usable_merge_dates,
+  bb.usable_ms_drg_code,
+  bb.usable_apr_drg_code,
   bb.usable_diagnosis_code_1,
   bb.usable_admit_type_code,
   bb.usable_admit_source_code,

@@ -34,6 +34,8 @@ select
 
   merge_dates.usable_merge_dates,
 
+  header_values.usable_ms_drg_code,
+  header_values.usable_apr_drg_code,
   header_values.usable_diagnosis_code_1,
   header_values.usable_admit_type_code,
   header_values.usable_admit_source_code,
@@ -82,6 +84,7 @@ select
   case
     when  ( (usable_patient_id = 0) or
             (usable_merge_dates = 0) or
+	    (usable_ms_drg_code = 0 and usable_apr_drg_code = 0) or
             (usable_diagnosis_code_1 = 0) or
             (usable_admit_type_code = 0) or
             (usable_admit_source_code = 0) or
@@ -94,6 +97,8 @@ select
 
   usable_patient_id,
   usable_merge_dates,
+  usable_ms_drg_code,
+  usable_apr_drg_code,
   usable_diagnosis_code_1,
   usable_admit_type_code,
   usable_admit_source_code,

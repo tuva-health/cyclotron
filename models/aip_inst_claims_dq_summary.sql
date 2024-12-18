@@ -40,6 +40,18 @@ from {{ ref('acute_inpatient_institutional_claims') }}
 where usable_merge_dates = 0
 ),
 
+aip_inst_claims_with_unusable_ms_drg_code as (
+select count(distinct claim_id)
+from {{ ref('acute_inpatient_institutional_claims') }}
+where usable_ms_drg_code = 0
+),
+
+aip_inst_claims_with_unusable_apr_drg_code as (
+select count(distinct claim_id)
+from {{ ref('acute_inpatient_institutional_claims') }}
+where usable_apr_drg_code = 0
+),
+
 aip_inst_claims_with_unusable_diagnosis_code_1 as (
 select count(distinct claim_id)
 from {{ ref('acute_inpatient_institutional_claims') }}
@@ -138,6 +150,20 @@ union all
 select
 '(# AIP inst claims with unusable merge dates) / (# AIP inst claims) * 100' as field,
 round((select * from aip_inst_claims_with_unusable_merge_dates) * 100.0 /
+(select * from total_aip_inst_claims),1) as field_value
+
+union all
+
+select
+'(# AIP inst claims with unusable ms_drg_code) / (# AIP inst claims) * 100' as field,
+round((select * from aip_inst_claims_with_unusable_ms_drg_code) * 100.0 /
+(select * from total_aip_inst_claims),1) as field_value
+
+union all
+
+select
+'(# AIP inst claims with unusable apr_drg_code) / (# AIP inst claims) * 100' as field,
+round((select * from aip_inst_claims_with_unusable_apr_drg_code) * 100.0 /
 (select * from total_aip_inst_claims),1) as field_value
 
 union all

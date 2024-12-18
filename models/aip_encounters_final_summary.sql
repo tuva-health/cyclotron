@@ -11,6 +11,18 @@ from {{ ref('aip_encounters_final') }}
 where dq_problem = 1
 ),
 
+aip_encounters_with_unusable_ms_drg_code as (
+select count(*)
+from {{ ref('aip_encounters_final') }}
+where usable_ms_drg_code = 0
+),
+
+aip_encounters_with_unusable_apr_drg_code as (
+select count(*)
+from {{ ref('aip_encounters_final') }}
+where usable_apr_drg_code = 0
+),
+
 aip_encounters_with_unusable_dx1 as (
 select count(*)
 from {{ ref('aip_encounters_final') }}
@@ -114,6 +126,20 @@ union all
 select
 '(aip_encounters_with_dq_prob) / (aip_encounters) * 100' as field,
 round( (select * from aip_encounters_with_dq_problems) * 100.0 /
+(select * from aip_encounters),1) as field_value
+
+union all
+
+select
+'(aip_encounters_with_unusable_ms_drg_code) / (aip_encounters) * 100' as field,
+round( (select * from aip_encounters_with_unusable_ms_drg_code) * 100.0 /
+(select * from aip_encounters),1) as field_value
+
+union all
+
+select
+'(aip_encounters_with_unusable_apr_drg_code) / (aip_encounters) * 100' as field,
+round( (select * from aip_encounters_with_unusable_apr_drg_code) * 100.0 /
 (select * from aip_encounters),1) as field_value
 
 union all

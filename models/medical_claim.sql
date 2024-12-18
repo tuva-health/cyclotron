@@ -1,3 +1,3 @@
 
 select *
-from cms_synthetic.input_layer.medical_claim
+from tuva_synthetic.input_layer.medical_claim
