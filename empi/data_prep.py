@@ -13,9 +13,14 @@ import unicodedata
 # Read in the data
 df = pd.read_csv("tuva_synth_clean.csv", dtype=str)
 df.head()
-df.shape()
+df.shape
 
 
+
+
+# --------------------------------------------------
+# Rename any columns you may want to rename, eg:
+df = df.rename(columns={"zipcode": "zip_code"})
 
 # --------------------------------------------------
 # Custom EDA
@@ -687,6 +692,9 @@ def clean_phone_column(df, column='phone', extract_10_digits=True):
         '1111111111': np.nan
     })
 
+    # Replace values with 7+ consecutive identical digits with NaN
+    df[column] = df[column].replace(r"(.)\1{6,}", np.nan, regex=True)
+    
     # Optionally ensure it's 10 digits (standard US phone length)
     if extract_10_digits:
         df[column] = df[column].where(df[column].str.len() == 10, np.nan)
